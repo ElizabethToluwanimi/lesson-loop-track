@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedCoursesRouteImport } from './routes/_authenticated/courses'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
@@ -19,6 +20,7 @@ import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedProgressRouteImport } from './routes/_authenticated/progress'
 import { Route as AuthenticatedCoursesSlugRouteImport } from './routes/_authenticated/courses.$slug'
 import { Route as AuthenticatedLessonLessonIdRouteImport } from './routes/_authenticated/lesson.$lessonId'
+import { Route as ApiPublicHooksRemindersRouteImport } from './routes/api/public/hooks/reminders'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -33,6 +35,11 @@ const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedCoursesRoute = AuthenticatedCoursesRouteImport.update({
   id: '/courses',
@@ -72,10 +79,16 @@ const AuthenticatedLessonLessonIdRoute =
     path: '/lesson/$lessonId',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const ApiPublicHooksRemindersRoute = ApiPublicHooksRemindersRouteImport.update({
+  id: '/api/public/hooks/reminders',
+  path: '/api/public/hooks/reminders',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/courses': typeof AuthenticatedCoursesRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
@@ -83,10 +96,12 @@ export interface FileRoutesByFullPath {
   '/progress': typeof AuthenticatedProgressRoute
   '/courses/$slug': typeof AuthenticatedCoursesSlugRoute
   '/lesson/$lessonId': typeof AuthenticatedLessonLessonIdRoute
+  '/api/public/hooks/reminders': typeof ApiPublicHooksRemindersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/courses': typeof AuthenticatedCoursesRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
@@ -94,12 +109,14 @@ export interface FileRoutesByTo {
   '/progress': typeof AuthenticatedProgressRoute
   '/courses/$slug': typeof AuthenticatedCoursesSlugRoute
   '/lesson/$lessonId': typeof AuthenticatedLessonLessonIdRoute
+  '/api/public/hooks/reminders': typeof ApiPublicHooksRemindersRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/courses': typeof AuthenticatedCoursesRouteWithChildren
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
@@ -107,12 +124,14 @@ export interface FileRoutesById {
   '/_authenticated/progress': typeof AuthenticatedProgressRoute
   '/_authenticated/courses/$slug': typeof AuthenticatedCoursesSlugRoute
   '/_authenticated/lesson/$lessonId': typeof AuthenticatedLessonLessonIdRoute
+  '/api/public/hooks/reminders': typeof ApiPublicHooksRemindersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/auth'
+    | '/admin'
     | '/courses'
     | '/dashboard'
     | '/notifications'
@@ -120,10 +139,12 @@ export interface FileRouteTypes {
     | '/progress'
     | '/courses/$slug'
     | '/lesson/$lessonId'
+    | '/api/public/hooks/reminders'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
+    | '/admin'
     | '/courses'
     | '/dashboard'
     | '/notifications'
@@ -131,11 +152,13 @@ export interface FileRouteTypes {
     | '/progress'
     | '/courses/$slug'
     | '/lesson/$lessonId'
+    | '/api/public/hooks/reminders'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/admin'
     | '/_authenticated/courses'
     | '/_authenticated/dashboard'
     | '/_authenticated/notifications'
@@ -143,12 +166,14 @@ export interface FileRouteTypes {
     | '/_authenticated/progress'
     | '/_authenticated/courses/$slug'
     | '/_authenticated/lesson/$lessonId'
+    | '/api/public/hooks/reminders'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  ApiPublicHooksRemindersRoute: typeof ApiPublicHooksRemindersRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -173,6 +198,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/courses': {
       id: '/_authenticated/courses'
@@ -223,6 +255,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedLessonLessonIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/hooks/reminders': {
+      id: '/api/public/hooks/reminders'
+      path: '/api/public/hooks/reminders'
+      fullPath: '/api/public/hooks/reminders'
+      preLoaderRoute: typeof ApiPublicHooksRemindersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -238,6 +277,7 @@ const AuthenticatedCoursesRouteWithChildren =
   AuthenticatedCoursesRoute._addFileChildren(AuthenticatedCoursesRouteChildren)
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedCoursesRoute: typeof AuthenticatedCoursesRouteWithChildren
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
@@ -247,6 +287,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedCoursesRoute: AuthenticatedCoursesRouteWithChildren,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
@@ -262,6 +303,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  ApiPublicHooksRemindersRoute: ApiPublicHooksRemindersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
