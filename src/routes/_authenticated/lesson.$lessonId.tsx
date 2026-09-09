@@ -97,12 +97,23 @@ function LessonPage() {
 
         {lesson.data.video_url && (
           <div className="mt-5 aspect-video overflow-hidden rounded-xl bg-muted">
-            <iframe
-              src={lesson.data.video_url}
-              title={lesson.data.title}
-              className="size-full"
-              allowFullScreen
-            />
+            {/\.(mp4|webm|ogg|mov)(\?|$)/i.test(lesson.data.video_url) ? (
+              <video
+                src={lesson.data.video_url}
+                title={lesson.data.title}
+                className="size-full"
+                controls
+                playsInline
+                preload="metadata"
+              />
+            ) : (
+              <iframe
+                src={lesson.data.video_url}
+                title={lesson.data.title}
+                className="size-full"
+                allowFullScreen
+              />
+            )}
           </div>
         )}
 
