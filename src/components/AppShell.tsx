@@ -9,6 +9,7 @@ import {
   LogOut,
   Settings2,
   User,
+  Wrench,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
