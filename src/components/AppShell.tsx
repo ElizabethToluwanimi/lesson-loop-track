@@ -9,6 +9,7 @@ import {
   LogOut,
   Settings2,
   User,
+  Wrench,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -20,6 +21,7 @@ const nav = [
   { to: "/dashboard", label: "Home", icon: LayoutDashboard },
   { to: "/courses", label: "Courses", icon: BookOpen },
   { to: "/progress", label: "Progress", icon: BarChart3 },
+  { to: "/tools", label: "Tools", icon: Wrench },
   { to: "/notifications", label: "Alerts", icon: Bell },
   { to: "/profile", label: "Profile", icon: User },
 ] as const;
@@ -108,7 +110,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <main className="px-4 pb-24 pt-4 md:ml-64 md:px-8 md:pb-12 md:pt-8">{children}</main>
 
-      <nav className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t bg-card/95 backdrop-blur md:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-6 border-t bg-card/95 backdrop-blur md:hidden">
         {nav.map((item) => (
           <Link
             key={item.to}
