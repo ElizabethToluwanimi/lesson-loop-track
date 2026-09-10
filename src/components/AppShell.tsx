@@ -21,6 +21,7 @@ const nav = [
   { to: "/dashboard", label: "Home", icon: LayoutDashboard },
   { to: "/courses", label: "Courses", icon: BookOpen },
   { to: "/progress", label: "Progress", icon: BarChart3 },
+  { to: "/tools", label: "Tools", icon: Wrench },
   { to: "/notifications", label: "Alerts", icon: Bell },
   { to: "/profile", label: "Profile", icon: User },
 ] as const;
