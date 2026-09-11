@@ -17,6 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ToolsManager } from "@/components/tools/ToolsManager";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
@@ -98,12 +99,17 @@ function AdminContent() {
       <Tabs defaultValue="content">
         <TabsList>
           <TabsTrigger value="content">Content</TabsTrigger>
+          <TabsTrigger value="tools">Tools</TabsTrigger>
           <TabsTrigger value="students">Students</TabsTrigger>
           <TabsTrigger value="announce">Announcements</TabsTrigger>
         </TabsList>
 
         <TabsContent value="content" className="mt-4 space-y-4">
           <ContentManager />
+        </TabsContent>
+
+        <TabsContent value="tools" className="mt-4 space-y-4">
+          <ToolsManager />
         </TabsContent>
 
         <TabsContent value="students" className="mt-4">
